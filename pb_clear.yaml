@@ -1,0 +1,9 @@
+--
+- name: ospf config
+  hosts: all
+  gather_facts: false
+  
+  tasks:
+    - name: delete OSPF_CONFIG Process_ID and Networks
+      ios_command:
+        commands: no router ospf
