@@ -1,0 +1,23 @@
+---
+- name: ospf config
+  hosts: all
+  gather_facts: false
+  vars:
+    ospf:
+      process_id: 100
+      network: "10.0.0.0 0.0.255.255"
+  
+  
+  tasks:
+    - name: OSPF_CONFIG Process_ID and Networks
+      ios_config:
+        parents:
+          - router ospf {{ ospf.process_id }}
+        lines:
+          - network {{ ospf.network }} area 0 
+
+  handlers:
+    - name: HANDLER Config Save
+      listen: config_changed
+      ios_config:
+        save_when: always

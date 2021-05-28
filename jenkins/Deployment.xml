@@ -1,0 +1,98 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>This is a deployment pipeline</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.7.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/anton-fastlane/ndev-public</url>
+        <credentialsId>ac59ac95-25db-4577-989c-b0104ec07d64</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.UserIdentity>
+        <name>jenkins</name>
+        <email>jenkins@flane.ru</email>
+      </hudson.plugins.git.extensions.impl.UserIdentity>
+      <hudson.plugins.git.extensions.impl.PreBuildMerge>
+        <options>
+          <mergeRemote>origin</mergeRemote>
+          <mergeTarget>main</mergeTarget>
+          <mergeStrategy>default</mergeStrategy>
+          <fastForwardMode>FF</fastForwardMode>
+        </options>
+      </hudson.plugins.git.extensions.impl.PreBuildMerge>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>echo INSTALL_DEPENDENCIES
+sudo apt-get update -y
+sudo apt-get install python3-pip -y</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo CREATE_ENVIRONMENT
+sudo pip3 install virtualenv
+virtualenv venv
+. ./venv/bin/activate
+echo installing requirements.txt ...
+venv/bin/pip install -q -r ./requirements.txt</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo CONFIGURE_PROD_NET</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo TEST_PROD_NET</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>echo REMOVE_ENVIRONMENT
+rm -rf ./venv</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.git.GitPublisher plugin="git@4.7.1">
+      <configVersion>2</configVersion>
+      <pushMerge>false</pushMerge>
+      <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
+      <forcePush>false</forcePush>
+      <tagsToPush>
+        <hudson.plugins.git.GitPublisher_-TagToPush>
+          <targetRepoName>origin</targetRepoName>
+          <tagName>v0.1.$BUILD_NUMBER</tagName>
+          <tagMessage>$BUILD_URL</tagMessage>
+          <createTag>true</createTag>
+          <updateTag>false</updateTag>
+        </hudson.plugins.git.GitPublisher_-TagToPush>
+      </tagsToPush>
+    </hudson.plugins.git.GitPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.39">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>
