@@ -1,0 +1,199 @@
+enable
+
+erase startup-config
+
+reload
+
+
+
+--------------------vios-test-1--------------------------
+ena
+conf t
+hostname vios-prod-1
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.244 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.11.1 255.255.255.252
+no sh
+int g0/2
+ip add 10.0.12.1 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
+
+--------------------vios-test-2--------------------------
+ena
+conf t
+hostname vios-prod-2
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.245 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.11.2 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
+
+--------------------vios-test-3--------------------------
+ena
+conf t
+hostname vios-prod-3
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.246 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.12.2 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
+
+--------------------vios-prod-1--------------------------
+ena
+conf t
+hostname vios-prod-1
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.204 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.11.1 255.255.255.252
+no sh
+int g0/2
+ip add 10.0.12.1 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
+
+--------------------vios-prod-2--------------------------
+ena
+conf t
+hostname vios-prod-2
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.205 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.11.2 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
+
+--------------------vios-prod-3--------------------------
+ena
+conf t
+hostname vios-prod-3
+enable secret cisco
+no ip domain-lookup
+int g0/0
+ip add 10.78.3.206 255.255.255.192
+no sh
+int g0/1
+ip add 10.0.12.2 255.255.255.252
+no sh
+exit
+ip route 0.0.0.0 0.0.0.0 10.78.3.193
+ip domain name flane.ru
+crypto key gen rsa modulus 1024
+ip ssh version 2
+aaa new-model
+username admin password cisco
+line vty 0 15
+transport input ssh
+logging sync
+exit
+line con 0
+logging sync
+exit
+exit
+wr
+
+-----------------------------------------------------
