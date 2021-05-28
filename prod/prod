@@ -7,11 +7,11 @@ ansible_become=yes
 ansible_become_password=cisco
 
 [core]
-vios-prod-1 ansible_host=10.78.3.204
+vios-prod-1 ansible_host=10.78.3.214
 
 [edge]
-vios-test-2 ansible_host=10.78.3.205
-vios-test-3 ansible_host=10.78.3.206
+vios-test-2 ansible_host=10.78.3.215
+vios-test-3 ansible_host=10.78.3.216
 
 [devices:children]
 core
